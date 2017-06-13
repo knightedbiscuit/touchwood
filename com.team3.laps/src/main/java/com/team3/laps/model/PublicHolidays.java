@@ -16,16 +16,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class PublicHolidays {
 
 	@Id
-	@Column(name="public_name")
+	@Column(name="holiday_name")
 	private String publicName;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="date_from")
 	private Date dateFrom;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="date_to")
 	private Date dateTo;
 

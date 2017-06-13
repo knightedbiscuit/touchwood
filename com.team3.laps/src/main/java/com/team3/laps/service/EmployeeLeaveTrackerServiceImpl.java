@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.team3.laps.model.Employee;
 import com.team3.laps.model.EmployeeLeaveTracker;
@@ -25,6 +26,7 @@ public class EmployeeLeaveTrackerServiceImpl implements EmployeeLeaveTrackerServ
 	}
 
 	@Override
+	@Transactional
 	public double findAvailableLeave(Integer eId, Integer leaveTypeID) {
 		EmployeeLeaveTracker eLT;
 		eLT = employeeTrackerRepo.findEmployeeLeaveTrackerByeidAndleaveTypeId(eId,leaveTypeID);

@@ -11,6 +11,9 @@ import com.team3.laps.model.Leave;
 
 
 public interface LeaveRepository extends JpaRepository<Leave, Integer> {
+	
+	@Query("SELECT l from Leave l WHERE l.leaveTo <= :dateTo AND l.leaveFrom >= :dateFrom" )
+	ArrayList<Leave> findLeaveByStartEndDate(@Param("dateTo") Date dateTo, @Param("dateFrom") Date dateFrom );
 
 //	@Query("SELECT l from Leave l WHERE l.emp.employeeId = :eid")
 //	ArrayList<Leave> findLeavesByeid(@Param("eid") Integer eid );
