@@ -58,7 +58,9 @@ public class ApplyLeaveControllor {
 	public ModelAndView createAnnualLeavePage(Model model, HttpSession session) {
 		Leave leave = new Leave();
 		leave.setStatus("New");
-		return new ModelAndView("apply-annualleave", "leave", leave);
+		ModelAndView mav = new ModelAndView("apply-annualleave", "leave", leave);
+		mav.addObject("leavetype", "ANNUAL LEAVE");
+		return mav;
 
 	}
 
@@ -110,7 +112,7 @@ public class ApplyLeaveControllor {
 			calFrom.add(Calendar.DATE, 1);
 		}
 		
-		/* Compute actual leave take*/
+		/* Compute actual leave taken*/
 		if (findDayDifference(dateFrom, dateTo) <= 14) {
 			leaveCount = (double) findDayDifference(dateFrom, dateTo) - satsunCount - weekdayPbCount;
 		} else {

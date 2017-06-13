@@ -25,7 +25,7 @@
 			});
 		});
 	</script>
-	<h1>Apply Annual Leave</h1>
+	<h1>Apply ${leavetype}</h1>
 	<p>${errorMsg}</p>
 	<form:form
 		action="${pageContext.request.contextPath}/applyleave/annual"
