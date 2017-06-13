@@ -7,7 +7,7 @@ import com.team3.laps.model.Role;
 
 
 
-public interface RoleRepository extends JpaRepository<Role, String>{
+public interface RoleRepository extends JpaRepository<Role, Integer>{
 
 	@Query("SELECT r.roleId from Role r WHERE r.description = :roleName")
 	String getRoleNameByRoleId(@Param("roleName") String roleName);

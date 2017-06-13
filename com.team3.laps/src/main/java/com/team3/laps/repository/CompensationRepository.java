@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.team3.laps.model.Compensation;
 
-public interface CompensationRepository extends JpaRepository<Compensation,String>{
+public interface CompensationRepository extends JpaRepository<Compensation,Integer>{
 
 	@Query("SELECT c from Compensation c WHERE c.employeeId = :eid")
 	ArrayList<Compensation> findCompensationsByeid(@Param("eid")Integer eid);

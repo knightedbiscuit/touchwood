@@ -1,37 +1,34 @@
 package com.team3.laps.model;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="employee-role")
-@IdClass(EmployeeRole.class)
-public class EmployeeRole implements Serializable {
-	
-//	@Id
-//	@Column(name="employee_id")
-//	private int employeeId;
-//	
-//	@Id
-//	@Column(name="role_id")
-//	private int roleId;
+public class EmployeeRole {
 	
 	@Id
+	@Column(name="pk_id")
+	private Integer pkId;
+	
+//	@Column(name="employee_id",insertable=false ,updatable=false)
+//	private Integer employeeId;
+//	
+//	
+//	@Column(name="role_id",insertable=false ,updatable=false)
+//	private Integer roleId;
+	
 	@OneToOne(targetEntity = Role.class,cascade=CascadeType.ALL)
 	@JoinColumn(name="role_id",referencedColumnName="id")
 	private Role role;
 	
-	@Id
-	@OneToOne(targetEntity = Employee.class,cascade=CascadeType.ALL)
+	@OneToOne(targetEntity = Employee.class,mappedBy="empRole",cascade=CascadeType.ALL)
 	@JoinColumn(name="employee_id",referencedColumnName="id")
     private Employee emp;
 	
@@ -43,19 +40,19 @@ public class EmployeeRole implements Serializable {
 	 * @ManyToOne (cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Employee employee= new Employee();*/
 
-//	public int getEmployeeId() {
-//		return employeeId;
-//	}
-//
-//	public void setEmployeeId(int employeeId) {
+	public Integer getEmployeeId() {
+		return emp.getEmployeeId();
+	}
+
+//	public void setEmployeeId(Integer employeeId) {
 //		this.employeeId = employeeId;
 //	}
-//
-//	public int getRoleId() {
-//		return roleId;
-//	}
-//
-//	public void setRoleId(int roleId) {
+
+	public Integer getRoleId() {
+		return role.getRoleId();
+	}
+
+//	public void setRoleId(Integer roleId) {
 //		this.roleId = roleId;
 //	}
 
@@ -65,17 +62,33 @@ public class EmployeeRole implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
+		this.role.setRoleId(role.getRoleId());
 	}
 
 	public Employee getEmp() {
 		return emp;
 	}
 
-	public void setEmp(Employee emp) {
-		this.emp = emp;
+//	public void setEmp(Employee emp) {
+//		this.emp = emp;
+//	}
+
+	public Integer getemployeeId() {
+		return emp.getEmployeeId();
 	}
 
-	
+//	public void setEmployeeid(Integer employeeid) {
+//		employeeId = employeeid;
+//	}
+
+	public Integer getroleId() {
+		return role.getRoleId();
+	}
+
+//	public void setroleId(Integer role_id) {
+//		roleId = role_id;
+//	}
+
 	//public String getRole() {
 	//	return getRole();
 	//}
@@ -84,12 +97,6 @@ public class EmployeeRole implements Serializable {
 		Role = role;
 	}*/
 
-	public EmployeeRole(Employee e, Role r) {
-		super();
-		emp = e;
-		role = r;
-		//Role_id = role;
-	}
 
 	public EmployeeRole() {
 		// TODO Auto-generated constructor stub

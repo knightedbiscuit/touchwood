@@ -20,18 +20,18 @@ public class Compensation {
 
 	@Id
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name="employee_id")
-	private int employeeId;
+	private Integer employeeId;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/mm/dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Column(name="claim_from")
 	private Date claimFrom;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/mm/dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Column(name="claim_to")
 	private Date claimTo;
 	
@@ -44,23 +44,23 @@ public class Compensation {
 	@Column(name="status")
 	private String status;
 	
-	@ManyToOne(targetEntity = Employee.class, cascade=CascadeType.ALL)
+	@ManyToOne(targetEntity = Employee.class, cascade=CascadeType.ALL,optional = true)
 	@JoinColumn(name="empolyee_id",referencedColumnName="id")
 	private Employee emp;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getEmployeeId() {
+	public Integer getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
 
@@ -104,13 +104,13 @@ public class Compensation {
 		this.status = status;
 	}
 
-	public Employee getEmp() {
-		return emp;
-	}
-
-	public void setEmp(Employee emp) {
-		this.emp = emp;
-	}
-	
+//	public Employee getEmp() {
+//		return emp;
+//	}
+//
+//	public void setEmp(Employee emp) {
+//		this.emp = emp;
+//	}
+//	
 	
 }

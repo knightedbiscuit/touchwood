@@ -1,38 +1,37 @@
 package com.team3.laps.model;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 @Entity
 @Table(name="employee-leave_entitlement")
-@IdClass(EmployeeLeaveEntitlement.class)
-public class EmployeeLeaveEntitlement implements Serializable {
+public class EmployeeLeaveEntitlement {
 
-//	@Id
-//	@Column(name="leave_type_id")
-//	private int leaveTypeId;
-//	
-//	@Id
-//	@Column(name="role_id")
-//	private int roleId;
+	@Id
+	@Column(name="pk_id")
+	private Integer pkId;
+	
+	@Column(name="leave_type_id",insertable=false ,updatable=false)
+	private Integer leaveTypeId;
+	
+	@Column(name="role_id",insertable=false ,updatable=false)
+	private Integer roleId;
 	
 	@Column(name="days")
 	private double days;
 	
-	@Id
 	@OneToOne(targetEntity = LeaveType.class,cascade=CascadeType.ALL)
 	@JoinColumn(name="leave_type_id",referencedColumnName="id")
     private LeaveType leavetype;
 	
-	@Id
 	@OneToOne(targetEntity = Role.class,cascade=CascadeType.ALL)
 	@JoinColumn(name="role_id",referencedColumnName="id")
 	private Role role;
@@ -53,21 +52,21 @@ public class EmployeeLeaveEntitlement implements Serializable {
 		this.role = role;
 	}
 
-//	public int getLeaveTypeId() {
-//		return leaveTypeId;
-//	}
-//
-//	public void setLeaveTypeId(int leaveTypeId) {
-//		this.leaveTypeId = leaveTypeId;
-//	}
-//
-//	public int getRoleId() {
-//		return roleId;
-//	}
-//
-//	public void setRoleId(int roleId) {
-//		this.roleId = roleId;
-//	}
+	public Integer getLeaveTypeId() {
+		return leaveTypeId;
+	}
+
+	public void setLeaveTypeId(Integer leaveTypeId) {
+		this.leaveTypeId = leaveTypeId;
+	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
 
 	public double getDays() {
 		return days;

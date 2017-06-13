@@ -3,6 +3,7 @@ package com.team3.laps.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +21,7 @@ import javax.persistence.Table;
 public class Employee {
 	@Id
 	@Column(name="id")
-	private int employeeId;
+	private Integer employeeId;
 
 	@Column(name="name", nullable= false)
 	private String name;
@@ -27,127 +29,87 @@ public class Employee {
 	@Column(name="email", nullable= false)
 	private String email;
 
-//	@Column(name="manager_id")
-//	private String managerId;
-//	
+	@Column(name="manager_id",insertable=false,updatable= false)
+	private Integer managerId;
+	
 	@Column(name="password")
 	private String password;
 	
-	@OneToMany(targetEntity=Compensation.class, mappedBy="emp",cascade=javax.persistence.CascadeType.ALL)
+	@OneToMany(targetEntity=Compensation.class,mappedBy="emp",cascade=CascadeType.ALL)
 	private List<Compensation> compensations = new ArrayList<Compensation>();
 	
-	@ManyToOne(targetEntity = Employee.class, cascade=CascadeType.ALL)
+	@ManyToOne(targetEntity = Employee.class, cascade=CascadeType.ALL,optional = true)
+	@JoinColumn(name="manager_id",referencedColumnName="id")
 	private Employee manager;
 	
-	@OneToMany(targetEntity=Employee.class,mappedBy="manager",cascade=javax.persistence.CascadeType.ALL)
-    //@JoinColumn(name="manager_id",referencedColumnName="id")
+	@OneToMany(targetEntity=Employee.class,mappedBy="manager",cascade=CascadeType.ALL)
 	private List<Employee> subordinates = new ArrayList<Employee>();
 	
-	@OneToMany(targetEntity=Leave.class,mappedBy="emp", fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	private List<Leave> employeeLeaves= new ArrayList<Leave>();
+//	@OneToMany(mappedBy="emp", fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+//	private List<Leave> employeeLeaves= new ArrayList<Leave>();
 	
-	@ManyToOne(targetEntity = Role.class,cascade=CascadeType.ALL)
-	private Role role;
+	@OneToOne(targetEntity = EmployeeRole.class,cascade=CascadeType.ALL)
+	@JoinColumn(name="id",referencedColumnName="employee_id")
+	private EmployeeRole empRole;
 	
-	public List<Compensation> getCompensations() {
-		return compensations;
-	}
-
-	public void setCompensations(ArrayList<Compensation> compensations) {
-		this.compensations = compensations;
-	}
-
 	public Employee getManager() {
 		return manager;
 	}
-
 	public void setManager(Employee manager) {
 		this.manager = manager;
+		this.setManagerId(manager.getManagerId());
 	}
-
-	public List<Employee> getSubordinates() {
-		return subordinates;
+	private void setManagerId(Integer managerId) {
+		this.managerId = managerId;
 	}
-
-	public void setSubordinates(ArrayList<Employee> subordinates) {
-		this.subordinates = subordinates;
-	}
-
-	public List<Leave> getEmployeeLeaves() {
-		return employeeLeaves;
-	}
-
-	public void setEmployeeLeaves(ArrayList<Leave> employeeLeaves) {
-		this.employeeLeaves = employeeLeaves;
-	}
-
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-//	public String getManagerId() {
-//		return managerId;
-//	}
-//
-//	public void setManagerId(String managerId) {
-//		this.managerId = managerId;
-//	}
-
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	//public Role getCurrentrole() {
-	//	return currentRole;
-	//}
-
-	//public void setCurrentrole(Role currentRole) {
-	//	this.currentRole = currentRole;
-	//}
-
-	/*public List<EmployeeLeaveTracker> getemployeeLeaves() {
-		return employeeLeaves;
+	public Integer getManagerId() {
+		return managerId;
 	}
-
-	public void setemployeeLeaves(List<EmployeeLeaveTracker> employee_leaves) {
-		employeeLeaves = employee_leaves;
-	}*/
-
+	public List<Compensation> getCompensations() {
+		return compensations;
+	}
+	public List<Employee> getSubordinates() {
+		return subordinates;
+	}
+//	public List<Leave> getEmployeeLeaves() {
+//		return employeeLeaves;
+//	}
+	public EmployeeRole getEmpRole() {
+		return empRole;
+	}
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(int id, String Name, String Email, Employee m, String Password) {
+	public Employee(Integer id, String Name, String Email, Integer manager_id, String Password) {
 		super();
 		employeeId = id;
 		name = Name;
 		email = Email;
-		manager = m;
+		managerId = manager_id;
 		password = Password;
 	}
 

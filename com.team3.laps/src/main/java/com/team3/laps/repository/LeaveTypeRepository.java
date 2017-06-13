@@ -7,7 +7,7 @@ import com.team3.laps.model.LeaveType;
 
 
 
-public interface LeaveTypeRepository extends JpaRepository<LeaveType, String>{
+public interface LeaveTypeRepository extends JpaRepository<LeaveType, Integer>{
 
 	@Query("SELECT lp.description from LeaveType lp where lp.id = :id")
 	String getLeaveTypeNameByLeaveTypeId(@Param("id") Integer id);

@@ -1,7 +1,5 @@
 package com.team3.laps.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,19 +11,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "employee-leave_tracker")
-public class EmployeeLeaveTracker implements Serializable  {
-	
-	
+public class EmployeeLeaveTracker {
 	
 	@Id
-	@Column(name = "employee_id")
-	private int employeeId;
+	@Column(name="pk_id")
+	private Integer pkId;
 	
-	@Id
-	@Column(name = "leave_type_id")
-	private int leaveTypeId;
+	@Column(name = "employee_id",insertable=false ,updatable=false)
+	private Integer employeeId;
+
+	@Column(name = "leave_type_id",insertable=false ,updatable=false)
+	private Integer leaveTypeId;
 	
 	@Basic
 	@Column(name = "days")
@@ -55,19 +54,19 @@ public class EmployeeLeaveTracker implements Serializable  {
 		this.leavetype = leavetype;
 	}
 
-	public int getEmployeeId() {
+	public Integer getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
 
-	public int getLeaveTypeId() {
+	public Integer getLeaveTypeId() {
 		return leaveTypeId;
 	}
 
-	public void setLeaveTypeId(int leaveTypeId) {
+	public void setLeaveTypeId(Integer leaveTypeId) {
 		this.leaveTypeId = leaveTypeId;
 	}
 
@@ -79,7 +78,7 @@ public class EmployeeLeaveTracker implements Serializable  {
 		this.days = days;
 	}
 
-	public EmployeeLeaveTracker(int employeeId, int leaveTypeId, double days) {
+	public EmployeeLeaveTracker(Integer employeeId, Integer leaveTypeId, double days) {
 		super();
 		this.employeeId = employeeId;
 		this.leaveTypeId = leaveTypeId;

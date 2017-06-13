@@ -20,12 +20,12 @@ public class PublicHolidays {
 	private String publicName;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/mm/dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Column(name="date_from")
 	private Date dateFrom;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/mm/dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Column(name="date_to")
 	private Date dateTo;
 

@@ -10,7 +10,7 @@ import com.team3.laps.model.Compensation;
 import com.team3.laps.model.Employee;
 import com.team3.laps.model.Leave;
 
-public interface EmployeeRepository extends JpaRepository<Employee, String> {
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	// param type may has to be string or integer. To be confirmed.
 
@@ -25,8 +25,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
 	@Query("SELECT e.compensations from Employee e WHERE e.name = :ename")
 	ArrayList<Compensation> findCompensationsByeName(@Param("ename") String ename);
 
-	@Query("SELECT e.employeeLeaves from Employee e WHERE e.name = :ename")
-	ArrayList<Leave> findLeavesByeName(@Param("ename") String ename);
+//	@Query("SELECT e.employeeLeaves from Employee e WHERE e.name = :ename")
+//	ArrayList<Leave> findLeavesByeName(@Param("ename") String ename);
 
 	@Query("SELECT e.subordinates from Employee e WHERE e.id = :managerId")
 	ArrayList<Employee> findSubordinatesByManagerId(@Param("managerId") Integer managerId);
@@ -35,8 +35,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
 	@Query("SELECT e.compensations from Employee e WHERE e.employeeId = :eid")
 	ArrayList<Compensation> findCompensationsByeid(@Param("eid") Integer eid);
 
-	@Query("SELECT e.employeeLeaves from Employee e WHERE e.employeeId = :eid")
-	ArrayList<Leave> findLeavesByeid(@Param("eid") Integer eid);
+//	@Query("SELECT e.employeeLeaves from Employee e WHERE e.employeeId = :eid")
+//	ArrayList<Leave> findLeavesByeid(@Param("eid") Integer eid);
 
 	@Query("SELECT e FROM Employee e where e.employeeId = :id")
 	Employee findEmployeeById(@Param("id") Integer id);

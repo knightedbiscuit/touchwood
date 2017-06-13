@@ -1,10 +1,13 @@
 package com.team3.laps.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,34 +16,36 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="leave")
-public class Leave {
+@Table(name="leave_info")
+public class Leave implements Serializable{
 
 	@Id
 	@Column(name="id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
-//	@Column(name="employee_id")
-//	private int employeeId;
+	@Column(name="employee_id")
+	private Integer employeeId;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="applied_on")
 	private Date appliedOn;
 	
-//	@Column(name="leave_type_id")
-//	private String leaveTypeId;
+	@Column(name="leave_type_id")
+	private Integer leaveTypeId;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="leave_from")
 	private Date leaveFrom;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="leave_to")
 	private Date leaveTo;
 	
@@ -59,45 +64,45 @@ public class Leave {
 	@Column(name="comments")
 	private String comments;
 	
-	@ManyToOne(targetEntity = Employee.class,cascade=CascadeType.ALL)
-	@JoinColumn(name="employee_id",referencedColumnName="id")
-    private Employee emp;
-	
-	@OneToOne(targetEntity = LeaveType.class,cascade=CascadeType.ALL)
-	@JoinColumn(name="leave_type_id",referencedColumnName="id")
-    private LeaveType leavetype;
+//	@ManyToOne(targetEntity = Employee.class,cascade=CascadeType.ALL)
+//	@JoinColumn(name="employee_id" ,referencedColumnName="id")
+//    private Employee emp;
+//	
+//	@OneToOne(targetEntity = LeaveType.class,cascade=CascadeType.ALL)
+//	@JoinColumn(name="leave_type_id",referencedColumnName="id")
+//    private LeaveType leavetype;
 
-	public Employee getEmp() {
-		return emp;
-	}
+//	public Employee getEmp() {
+//		return emp;
+//	}
+//
+//	public void setEmp(Employee emp) {
+//		this.emp = emp;
+//	}
+//
+//	public LeaveType getLeavetype() {
+//		return leavetype;
+//	}
+//
+//	public void setLeavetype(LeaveType leavetype) {
+//		this.leavetype = leavetype;
+//	}
 
-	public void setEmp(Employee emp) {
-		this.emp = emp;
-	}
-
-	public LeaveType getLeavetype() {
-		return leavetype;
-	}
-
-	public void setLeavetype(LeaveType leavetype) {
-		this.leavetype = leavetype;
-	}
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-//	public int getEmployeeId() {
-//		return employeeId;
-//	}
-//
-//	public void setEmployeeId(int employeeId) {
-//		this.employeeId = employeeId;
-//	}
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
 
 	public Date getAppliedOn() {
 		return appliedOn;
@@ -107,13 +112,13 @@ public class Leave {
 		this.appliedOn = appliedOn;
 	}
 
-//	public String getLeaveTypeId() {
-//		return leaveTypeId;
-//	}
-//
-//	public void setLeaveTypeId(String leaveTypeId) {
-//		this.leaveTypeId = leaveTypeId;
-//	}
+	public Integer getLeaveTypeId() {
+		return leaveTypeId;
+	}
+
+	public void setLeaveTypeId(Integer leaveTypeId) {
+		this.leaveTypeId = leaveTypeId;
+	}
 
 	public Date getLeaveFrom() {
 		return leaveFrom;

@@ -20,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team3.laps.javaBean.UserSession;
 import com.team3.laps.model.Leave;
+import com.team3.laps.model.LeaveType;
 import com.team3.laps.service.EmployeeLeaveTrackerService;
 import com.team3.laps.service.LeaveService;
+import com.team3.laps.service.LeaveTypeService;
 import com.team3.laps.validator.LeaveValidator;
 
 @Controller
@@ -33,7 +35,7 @@ public class ApplyLeaveControllor {
 
 	@Autowired
 	private LeaveService lService;
-
+	
 	@Autowired
 	private LeaveValidator leaveValidator;
 
@@ -47,21 +49,23 @@ public class ApplyLeaveControllor {
 
 	@RequestMapping(value = "/annual", method = RequestMethod.GET)
 	public ModelAndView createAnnualLeavePage(Model model, HttpSession session) {
-		return new ModelAndView("apply-annualleave", "leave", new Leave());
+		Leave leave = new Leave();
+		leave.setStatus("New");
+		return new ModelAndView("apply-annualleave", "leave", leave);
 
 	}
 
 	@RequestMapping(value = "/annual", params = "submit", method = RequestMethod.POST)
 	public ModelAndView submitAnnualLeave(@ModelAttribute Leave leave, BindingResult result,
 			final RedirectAttributes redirectAttributes, HttpSession session) {
-		/*validate empty field, date, Workingday*/
+		/* validate empty field, date, Workingday */
 		leaveValidator.validate(leave, result);
 
 		if (result.hasErrors()) {
 			return new ModelAndView("apply-annualleave");
 		}
-		
-		/*check for overlapping leave*/
+
+		/* check for overlapping leave */
 
 		Date dateFrom = leave.getLeaveFrom();
 		Date dateTo = leave.getLeaveTo();
@@ -71,7 +75,7 @@ public class ApplyLeaveControllor {
 		Calendar calTo = Calendar.getInstance();
 		calFrom.setTime(dateFrom);
 		calTo.setTime(dateTo);
-		
+
 		/* calculate leave taken : >14days, include Sat,Sun and vice versa */
 		double count = 0;
 		if (findDayDifference(dateFrom, dateTo) <= 14) {
@@ -92,17 +96,20 @@ public class ApplyLeaveControllor {
 		/* Deny application if exceed leave balance */
 		// UserSession us = (UserSession)session.getAttribute("USERSESSION");
 		// int id = us.getEmployee().getEmployeeId();
-		Integer eID = 9;
-		double leaveleft = eTrackerService.findAvailableLeave(eID, ANNUAL_LEAVEID);
-		if (count > leaveleft) {
-			return new ModelAndView("apply-annualleave");
-		}
-		else{
-			// Date myDate = new Date();
-			// java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+		// Integer eID = 9;
+		// double leaveleft = eTrackerService.findAvailableLeave(eID,
+		// ANNUAL_LEAVEID);
+		if (count > 5) {
+			ModelAndView mv2 = new ModelAndView("apply-annualleave");
+			mv2.addObject("errorMsg", "Leave applied exceed leave available");
+			return mv2;
+		} else {
+			leave.setEmployeeId(2);
+			leave.setLeaveTypeId(Integer.valueOf(1));
+			leave.setAppliedOn(new Date());
 			leave.setStatus("Applied");
 			leave.setComments("no comments");
-			// lService.addLeave(leave);
+			lService.addLeave(leave);
 
 			/* redirect to successful submission page */
 			ModelAndView mv = new ModelAndView("redirect:/applyleave/success");
@@ -114,7 +121,6 @@ public class ApplyLeaveControllor {
 
 			return mv;
 		}
-
 
 	}
 
