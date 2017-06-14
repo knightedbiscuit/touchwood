@@ -3,11 +3,13 @@ package com.team3.laps.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
+import com.team3.laps.model.LeaveType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,40 +19,17 @@ public class EmployeeLeaveEntitlement {
 
 	@Id
 	@Column(name="pk_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer pkId;
 	
-	@Column(name="leave_type_id",insertable=false ,updatable=false)
+	@Column(name="leave_type_id")
 	private Integer leaveTypeId;
 	
-	@Column(name="role_id",insertable=false ,updatable=false)
+	@Column(name="role_id")
 	private Integer roleId;
 	
 	@Column(name="days")
 	private double days;
-	
-	@OneToOne(targetEntity = LeaveType.class,cascade=CascadeType.ALL)
-	@JoinColumn(name="leave_type_id",referencedColumnName="id")
-    private LeaveType leavetype;
-	
-	@OneToOne(targetEntity = Role.class,cascade=CascadeType.ALL)
-	@JoinColumn(name="role_id",referencedColumnName="id")
-	private Role role;
-    
-	public LeaveType getLeavetype() {
-		return leavetype;
-	}
-
-	public void setLeavetype(LeaveType leavetype) {
-		this.leavetype = leavetype;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	public Integer getLeaveTypeId() {
 		return leaveTypeId;
@@ -75,5 +54,6 @@ public class EmployeeLeaveEntitlement {
 	public void setDays(double days) {
 		this.days = days;
 	}
+	
 	
 }

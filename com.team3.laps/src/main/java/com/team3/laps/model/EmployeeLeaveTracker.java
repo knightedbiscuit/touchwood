@@ -10,49 +10,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
+import com.team3.laps.model.LeaveType;
 
 @Entity
-@Table(name = "employee-leave_tracker")
+@Table(name = "employee_leave_tracker")
 public class EmployeeLeaveTracker {
 	
 	@Id
 	@Column(name="pk_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer pkId;
 	
-	@Column(name = "employee_id",insertable=false ,updatable=false)
+	@Column(name = "employee_id")
 	private Integer employeeId;
 
-	@Column(name = "leave_type_id",insertable=false ,updatable=false)
+	@Column(name = "leave_type_id")
 	private Integer leaveTypeId;
 	
 	@Basic
 	@Column(name = "days")
 	private double days;
-	
-	@OneToOne(targetEntity = Employee.class,cascade=CascadeType.ALL)
-	@JoinColumn(name="employee_id",referencedColumnName="id")
-    private Employee emp;
-	
-	@OneToOne(targetEntity = LeaveType.class,cascade=CascadeType.ALL)
-	@JoinColumn(name="leave_type_id",referencedColumnName="id")
-    private LeaveType leavetype;
-
-	public Employee getEmp() {
-		return emp;
-	}
-
-	public void setEmp(Employee emp) {
-		this.emp = emp;
-	}
-
-	public LeaveType getLeavetype() {
-		return leavetype;
-	}
-
-	public void setLeavetype(LeaveType leavetype) {
-		this.leavetype = leavetype;
-	}
 
 	public Integer getEmployeeId() {
 		return employeeId;
@@ -77,13 +54,7 @@ public class EmployeeLeaveTracker {
 	public void setDays(double days) {
 		this.days = days;
 	}
-
-	public EmployeeLeaveTracker(Integer employeeId, Integer leaveTypeId, double days) {
-		super();
-		this.employeeId = employeeId;
-		this.leaveTypeId = leaveTypeId;
-		this.days = days;
-	}
-
+	
+    
 
 }

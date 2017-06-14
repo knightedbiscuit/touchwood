@@ -2,21 +2,42 @@ package com.team3.laps.service;
 
 import java.util.ArrayList;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.team3.laps.model.Compensation;
 import com.team3.laps.model.Employee;
-import com.team3.laps.model.EmployeeLeaveTracker;
+import com.team3.laps.model.Leave;
 
 
 public interface EmployeeService {
 	
-	public Employee findEmployeeById(int i);
-	public Employee authenticate(String username, String password);
+	ArrayList<Employee> findSubordinatesByName(String Name );
 	
-	ArrayList<Employee> findSubordinates();
+	Employee findEmployeeByName(String ename);
+		
+	ArrayList<Employee> findAllManagers();
 	
-	ArrayList<EmployeeLeaveTracker> findLeaveDays();
+	ArrayList<String> findAllManagerNames();
 	
-	Employee addEmployee(Employee employee);
+	ArrayList<Employee> findAllEmployees();
+
+	Employee findEmployee(Integer eid);
+
+	Employee createEmployee(Employee e);
+
+	Employee changeEmployee(Employee e);
 	
-	Employee removeEmployee(Employee employee);
+	void addEmployee(Employee e);
 	
+	ArrayList<String> findAllEmployeeids();
+
+	void removeEmployee(Employee e);
+	
+	Employee findEmployeeLogin(String loginname, String pwd);
+
+	ArrayList<Compensation> findCompensationsByeid(Integer eid);
+	
+	ArrayList<Leave> findLeavesByeid(Integer eid);
+
 }

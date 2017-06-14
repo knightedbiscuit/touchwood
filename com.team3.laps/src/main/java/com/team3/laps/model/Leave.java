@@ -1,11 +1,12 @@
 package com.team3.laps.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,13 +16,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import com.team3.laps.model.LeaveType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="leave_info")
-public class Leave implements Serializable{
+public class Leave {
 
 	@Id
 	@Column(name="id")
@@ -62,31 +63,16 @@ public class Leave implements Serializable{
 	private String workDessimination;
 	
 	@Column(name="comments")
-	private String comments;
+	private String comments;		
 	
-//	@ManyToOne(targetEntity = Employee.class,cascade=CascadeType.ALL)
-//	@JoinColumn(name="employee_id" ,referencedColumnName="id")
-//    private Employee emp;
-//	
-//	@OneToOne(targetEntity = LeaveType.class,cascade=CascadeType.ALL)
-//	@JoinColumn(name="leave_type_id",referencedColumnName="id")
-//    private LeaveType leavetype;
+	
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
 
-//	public Employee getEmp() {
-//		return emp;
-//	}
-//
-//	public void setEmp(Employee emp) {
-//		this.emp = emp;
-//	}
-//
-//	public LeaveType getLeavetype() {
-//		return leavetype;
-//	}
-//
-//	public void setLeavetype(LeaveType leavetype) {
-//		this.leavetype = leavetype;
-//	}
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
 
 	public Integer getId() {
 		return id;
@@ -96,12 +82,8 @@ public class Leave implements Serializable{
 		this.id = id;
 	}
 
-	public Integer getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
+	public void setLeaveTypeId(Integer leaveTypeId) {
+		this.leaveTypeId = leaveTypeId;
 	}
 
 	public Date getAppliedOn() {
@@ -114,10 +96,6 @@ public class Leave implements Serializable{
 
 	public Integer getLeaveTypeId() {
 		return leaveTypeId;
-	}
-
-	public void setLeaveTypeId(Integer leaveTypeId) {
-		this.leaveTypeId = leaveTypeId;
 	}
 
 	public Date getLeaveFrom() {
@@ -176,4 +154,33 @@ public class Leave implements Serializable{
 		this.comments = comments;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Leave other = (Leave) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
+	public String getName()
+	{
+		return "New Name";
+	}
 }

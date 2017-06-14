@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page session="true" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,14 +27,18 @@
 		});
 	</script>
 	<h1>Apply ${leavetype}</h1>
-	<p>${errorMsg}</p>
+	<p style="color: red;">${errorMsg}</p>
 	<form:form
 		action="${pageContext.request.contextPath}/applyleave/annual"
 		modelAttribute="leave">
 		<table>
 			<tr>
-			<td>Status: </td>
-			<td><form:input path="status" readonly="true"/></td>
+				<td>Manager Name</td>
+				<td>${sessionScope.managerName}</td>
+			</tr>
+			<tr>
+				<td>Status:</td>
+				<td><form:input path="status" readonly="true" /></td>
 			</tr>
 			<tr>
 				<td>Leave From:</td>
@@ -43,13 +48,12 @@
 			<tr>
 				<td>Leave To:</td>
 				<td><form:input path="leaveTo" id="datepicker2" /> <form:errors
-						path="leaveTo" cssStyle="color: red;" size ="150%" /></td>
+						path="leaveTo" cssStyle="color: red;" size="150%" /></td>
 			</tr>
 			<tr>
 				<td>Leave Days:</td>
-				<td><form:input path="" placeholder="0" readonly="true" />
-				<input name="calculate" value="Calculate"
-						type="submit" /></td>
+				<td><form:input path="" placeholder="0" readonly="true" /> <input
+					name="calculate" value="Calculate" type="submit" /></td>
 			</tr>
 			<tr>
 				<td>Additional Reasons</td>

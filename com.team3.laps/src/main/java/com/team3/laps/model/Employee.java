@@ -1,18 +1,10 @@
 package com.team3.laps.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +13,7 @@ import javax.persistence.Table;
 public class Employee {
 	@Id
 	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer employeeId;
 
 	@Column(name="name", nullable= false)
@@ -29,88 +22,64 @@ public class Employee {
 	@Column(name="email", nullable= false)
 	private String email;
 
-	@Column(name="manager_id",insertable=false,updatable= false)
+	@Column(name="manager_id")
 	private Integer managerId;
 	
 	@Column(name="password")
 	private String password;
-	
-	@OneToMany(targetEntity=Compensation.class,mappedBy="emp",cascade=CascadeType.ALL)
-	private List<Compensation> compensations = new ArrayList<Compensation>();
-	
-	@ManyToOne(targetEntity = Employee.class, cascade=CascadeType.ALL,optional = true)
-	@JoinColumn(name="manager_id",referencedColumnName="id")
-	private Employee manager;
-	
-	@OneToMany(targetEntity=Employee.class,mappedBy="manager",cascade=CascadeType.ALL)
-	private List<Employee> subordinates = new ArrayList<Employee>();
-	
-//	@OneToMany(mappedBy="emp", fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-//	private List<Leave> employeeLeaves= new ArrayList<Leave>();
-	
-	@OneToOne(targetEntity = EmployeeRole.class,cascade=CascadeType.ALL)
-	@JoinColumn(name="id",referencedColumnName="employee_id")
-	private EmployeeRole empRole;
-	
-	public Employee getManager() {
-		return manager;
-	}
-	public void setManager(Employee manager) {
-		this.manager = manager;
-		this.setManagerId(manager.getManagerId());
-	}
-	private void setManagerId(Integer managerId) {
-		this.managerId = managerId;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+		
 	public Integer getEmployeeId() {
 		return employeeId;
 	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+
 	public String getName() {
 		return name;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getEmail() {
 		return email;
 	}
-	
-	public String getPassword() {
-		return password;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
 	public Integer getManagerId() {
 		return managerId;
 	}
-	public List<Compensation> getCompensations() {
-		return compensations;
+
+	public void setManagerId(Integer managerId) {
+		this.managerId = managerId;
 	}
-	public List<Employee> getSubordinates() {
-		return subordinates;
+
+	public String getPassword() {
+		return password;
 	}
-//	public List<Leave> getEmployeeLeaves() {
-//		return employeeLeaves;
-//	}
-	public EmployeeRole getEmpRole() {
-		return empRole;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
+
+
+	public Employee(Integer employeeId, String name, String email, String password) {
+		super();
+		this.employeeId = employeeId;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public Employee(Integer id, String Name, String Email, Integer manager_id, String Password) {
-		super();
-		employeeId = id;
-		name = Name;
-		email = Email;
-		managerId = manager_id;
-		password = Password;
 	}
 
 	@Override
@@ -118,6 +87,29 @@ public class Employee {
 		return "Employee [employeeId=" + employeeId + ", name=" + name + "]";
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((employeeId == null) ? 0 : employeeId.hashCode());
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		if (employeeId == null) {
+			if (other.employeeId != null)
+				return false;
+		} else if (!employeeId.equals(other.employeeId))
+			return false;
+		return true;
+	}
 
 }

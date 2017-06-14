@@ -9,25 +9,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.team3.laps.model.Leave;
+import com.team3.laps.model.LeaveTypeEnum;
+import com.team3.laps.model.StatusEnum;
 import com.team3.laps.repository.LeaveRepository;
-
 @Service
-public class LeaveServiceImpl implements LeaveService {
+public class LeaveServiceImpl implements LeaveService{
 
 	@Resource
-	private LeaveRepository leaveRepo;
-
+	private LeaveRepository lR;
+	
 	@Override
 	@Transactional
 	public Leave addLeave(Leave leave) {
-		return leaveRepo.saveAndFlush(leave);
+		return lR.saveAndFlush(leave);
 	}
 
 	@Override
 	@Transactional
 	public Boolean checkLeavebtwPeriod(Date datefrom, Date dateTo) {
 		ArrayList<Leave> lList = null;
-		lList = leaveRepo.findLeaveByStartEndDate(datefrom, dateTo);
+		lList = lR.findLeaveByStartEndDate(datefrom, dateTo);
 
 		if (lList != null) {
 			return true;
@@ -37,4 +38,66 @@ public class LeaveServiceImpl implements LeaveService {
 
 	}
 
+	@Override
+	@Transactional
+	public ArrayList<Leave> findLeavesByType(LeaveTypeEnum leaveType) {
+		// TODO Auto-generated method stub
+		return lR.findLeavesByType(leaveType);
+	}
+
+	@Override
+	@Transactional
+	public ArrayList<Leave> findLeavesByStatus(StatusEnum status) {
+		// TODO Auto-generated method stub
+		return lR.findLeavesByStatus(status);
+	}
+
+	@Override
+	@Transactional
+	public ArrayList<Leave> findLeavesByAppliedDate(Date appliedOn) {
+		// TODO Auto-generated method stub
+		return lR.findLeavesByAppliedDate(appliedOn);
+	}
+
+	@Override
+	@Transactional
+	public ArrayList<Leave> findLeavesByStartDate(Date FromDate) {
+		// TODO Auto-generated method stub
+		return lR.findLeavesByStartDate(FromDate);
+	}
+
+	@Override
+	@Transactional
+	public ArrayList<Leave> findLeavesByEndDate(Date ToDate) {
+		// TODO Auto-generated method stub
+		return lR.findLeavesByEndDate(ToDate);
+	}
+
+	@Override
+	@Transactional
+	public ArrayList<Leave> findPendingLeavesByeid(int eid) {
+		// TODO Auto-generated method stub
+		return lR.findPendingLeavesByeid(eid);
+	}
+
+	@Override
+	@Transactional
+	public ArrayList<Leave> findApprovedLeavesByeid(int eid) {
+		// TODO Auto-generated method stub
+		return lR.findApprovedLeavesByeid(eid);
+	}
+
+	@Override
+	@Transactional
+	public ArrayList<Leave> findRejectedLeavesByeid(int eid) {
+		// TODO Auto-generated method stub
+		return lR.findRejectedLeavesByeid(eid);
+	}
+
+	@Override
+	@Transactional
+	public ArrayList<Leave> findCancelledLeavesByeid(int eid) {
+		// TODO Auto-generated method stub
+		return lR.findCancelledLeavesByeid(eid);
+	}
 }

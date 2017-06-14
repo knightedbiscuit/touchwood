@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h1>${message}</h1>
-	<p>You have applied for ${leavecount}days of ${leavetype} Leave from ${leave.leaveFrom} to ${leave.leaveTo}. </p>
+	<p>You have applied for ${leavecount}days of ${leavetype} Leave from ${leavefrom} to ${leaveto}. </p>
 	<a href="${pagecontext.request.contextpath}/laps/home/start">Continue</a>
 
 </body>
