@@ -26,20 +26,6 @@ public class LeaveServiceImpl implements LeaveService{
 
 	@Override
 	@Transactional
-	public Boolean checkLeavebtwPeriod(Date datefrom, Date dateTo) {
-		ArrayList<Leave> lList = null;
-		lList = lR.findLeaveByStartEndDate(datefrom, dateTo);
-
-		if (lList != null) {
-			return true;
-		} else {
-			return true;
-		}
-
-	}
-
-	@Override
-	@Transactional
 	public ArrayList<Leave> findLeavesByType(LeaveTypeEnum leaveType) {
 		// TODO Auto-generated method stub
 		return lR.findLeavesByType(leaveType);
@@ -99,5 +85,12 @@ public class LeaveServiceImpl implements LeaveService{
 	public ArrayList<Leave> findCancelledLeavesByeid(int eid) {
 		// TODO Auto-generated method stub
 		return lR.findCancelledLeavesByeid(eid);
+	}
+
+	@Override
+	public ArrayList<Leave> findLeavesByTypeID(Integer lType) {
+		
+		return lR.findLeavesByTypeID(lType);
+	
 	}
 }

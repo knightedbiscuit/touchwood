@@ -13,9 +13,9 @@ import com.team3.laps.model.StatusEnum;
 public interface LeaveService {
 	
 	Leave addLeave(Leave leave);
-	
-	Boolean checkLeavebtwPeriod(Date datefrom, Date dateTo);
 
+	ArrayList<Leave> findLeavesByTypeID (Integer lType);
+	
 	ArrayList<Leave> findLeavesByType( LeaveTypeEnum leaveType );
 	
 	ArrayList<Leave> findLeavesByStatus( StatusEnum status );

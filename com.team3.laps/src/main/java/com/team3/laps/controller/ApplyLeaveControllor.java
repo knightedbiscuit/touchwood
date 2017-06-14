@@ -127,13 +127,16 @@ public class ApplyLeaveControllor {
 		}
 
 		/* check for overlapping leave */
-		// if(lService.checkLeavebtwPeriod(leave.getLeaveFrom(),
-		// leave.getLeaveTo()))
-		// {
-		// ModelAndView mav = new ModelAndView("apply-annualleave");
-		// mav.addObject("error", "You have already applied for leave during
-		// this period");
-		// }
+		ArrayList<Leave> leaveList = lService.findLeavesByTypeID(ANNUAL_LEAVEID);
+		for(Leave l:leaveList)
+		{
+			if(leave.getLeaveFrom().before(l.getLeaveTo())&&l.getLeaveFrom().after(leave.getLeaveTo()))
+			{
+				ModelAndView mav = new ModelAndView("apply-annualleave");
+				mav.addObject("errorMsg", "You have Applied/Approved leave during this period");
+				return mav;
+			}
+		}
 
 		Date dateFrom = leave.getLeaveFrom();
 		Date dateTo = leave.getLeaveTo();
@@ -176,6 +179,8 @@ public class ApplyLeaveControllor {
 		/* Deny application if exceed leave balance */
 		// UserSession us = (UserSession)session.getAttribute("USERSESSION");
 		// int id = us.getEmployee().getEmployeeId();
+
+		
 		Integer eID = 9;
 		double leaveleft = eTrackerService.findAvailableleave(eID, ANNUAL_LEAVEID);
 

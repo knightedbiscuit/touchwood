@@ -13,7 +13,10 @@ import com.team3.laps.model.StatusEnum;
 
 public interface LeaveRepository extends JpaRepository<Leave, Integer> {
 
-	@Query("SELECT l from Leave l WHERE l.leaveTo <= :dateTo AND l.leaveFrom >= :dateFrom" )
+	@Query("SELECT l from Leave l WHERE l.leaveTypeId = :lType")
+	ArrayList<Leave> findLeavesByTypeID(@Param("lType")Integer lType);
+	
+	@Query("SELECT l from Leave l WHERE l.leaveTo >= :dateTo AND l.leaveFrom <= :dateFrom" )
 	ArrayList<Leave> findLeaveByStartEndDate(@Param("dateTo") Date dateTo, @Param("dateFrom") Date dateFrom );
 	
 	@Query("SELECT l from Leave l, LeaveType lt WHERE lt.description = :leaveType AND l.leaveTypeId = lt.id")
